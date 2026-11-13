@@ -289,16 +289,16 @@
           </span>
           <h2>سفارشت آماده‌ست</h2>
         </div>
-        <p class="ok-sub">فقط یک قدم مونده: متن زیر رو <b>کپی کن</b> و توی دایرکت اینستاگرام لاواشاپ <b>پیست و ارسال</b> کن. به محض دیدنش، قیمت و موجودی رو باهات چک می‌کنیم.</p>
+        <p class="ok-sub">فقط دو قدم مونده: متن زیر رو <b>کپی کن</b>، بعد با دکمه‌ی پایین برو به پیج لاواشاپ، دکمه‌ی <b>Message</b> بالای پیج رو بزن و متن رو <b>پیست و ارسال</b> کن. به محض دیدنش، قیمت و موجودی رو باهات چک می‌کنیم.</p>
         <p class="order-text" id="orderText"></p>
         <div class="actions">
           <button type="button" class="btn btn-primary" id="copyBtn">۱ · کپی کردن متن سفارش</button>
-          <a class="btn btn-dark" id="igBtn" href="https://www.instagram.com/lavashop.ca/" target="_blank" rel="noopener">۲ · رفتن به دایرکت لاواشاپ</a>
+          <a class="btn btn-dark" id="igBtn" href="https://www.instagram.com/lavashop.ca/" target="_blank" rel="noopener">۲ · رفتن به پیج لاواشاپ و زدن دکمه‌ی پیام</a>
           <a class="btn btn-ghost" id="igWebBtn" href="https://www.instagram.com/lavashop.ca/" target="_blank" rel="noopener">اگه باز نشد: باز کردن پیج در اینستاگرام</a>
           <a class="btn btn-ghost" id="igAppBtn" href="instagram://user?username=lavashop.ca">باز کردن پیج در اپ اینستاگرام</a>
           <button type="button" class="btn btn-ghost" id="newBtn">ثبت یک سفارش دیگه</button>
         </div>
-        <p class="copied-note" id="copiedNote">کپی شد — حالا توی دایرکت پیستش کن و بفرست</p>
+        <p class="copied-note" id="copiedNote">کپی شد — حالا توی پیج، دکمه‌ی Message رو بزن و پیستش کن</p>
         <p class="under-btn">اگه هیچ‌کدوم از دکمه‌ها باز نشد: اپ اینستاگرام رو باز کن، <bdi>lavashop.ca</bdi> رو جستجو کن، وارد پیج شو و دکمه‌ی Message رو بزن؛ بعد متن کپی‌شده رو پیست و ارسال کن.</p>
       </section>
 
@@ -413,7 +413,7 @@
           var text = orderTextEl.textContent;
           function done() {
             copiedNote.classList.add('show');
-            copyBtn.textContent = 'کپی شد — حالا برو به دایرکت';
+            copyBtn.textContent = 'کپی شد — حالا برو به پیج و پیام بده';
           }
           if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(done, function () { fallback(); });
