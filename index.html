@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="data:," />
+    <title>صفحه ثبت سفارش لاواشاپ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root{
+        --bg:#FBF8F2;
+        --paper:#FFFFFF;
+        --ink:#211D19;
+        --ink-soft:#57504A;
+        --muted:#8A8178;
+        --line:#E7DFD2;
+        --line-strong:#D8CCB6;
+        --accent:#A5813F;
+        --accent-soft:#F3ECDC;
+        --danger:#B3402A;
+        --success:#2E7D4F;
+        --radius:14px;
+      }
+      *{box-sizing:border-box}
+      html{-webkit-text-size-adjust:100%}
+      body{
+        margin:0;
+        background:var(--bg);
+        color:var(--ink);
+        font-family:"Vazirmatn", system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+        line-height:1.75;
+      }
+      button,[role="button"],select,input,textarea,a.btn{min-height:44px}
+      .wrap{max-width:600px;margin:0 auto;padding:28px 20px 56px}
+
+      /* ---------- Header ---------- */
+      .brand{
+        text-align:center;
+        padding:14px 0 4px;
+      }
+      .brand .latin{
+        font-size:13px;letter-spacing:.42em;font-weight:500;color:var(--accent);
+        direction:ltr;text-transform:uppercase;margin:0 0 2px;padding-right:.42em;
+      }
+      .brand .fa-name{font-size:15px;color:var(--muted);margin:0;font-weight:400}
+      h1{
+        font-size:34px;line-height:1.35;font-weight:800;text-align:center;
+        margin:18px 0 6px;color:var(--ink);
+      }
+      .subtitle{
+        text-align:center;color:var(--ink-soft);font-size:15.5px;margin:0 auto;max-width:420px;font-weight:300;
+      }
+      .subtitle b{color:var(--accent);font-weight:700}
+      .divider{
+        width:56px;height:1px;background:var(--accent);border:0;margin:22px auto 0;opacity:.85;
+      }
+
+      /* ---------- Steps ---------- */
+      .steps{
+        display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;
+        margin:26px 0 8px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+      }
+      .step{padding:16px 10px 14px;text-align:center}
+      .step + .step{border-right:1px solid var(--line)}
+      .step .num{
+        display:inline-flex;align-items:center;justify-content:center;
+        width:30px;height:30px;border-radius:50%;
+        border:1px solid var(--line-strong);color:var(--accent);
+        font-size:14px;font-weight:700;background:var(--paper);margin-bottom:6px;
+      }
+      .step p{margin:0;font-size:13px;color:var(--ink-soft);line-height:1.6}
+
+      /* ---------- Form card ---------- */
+      .card{
+        background:var(--paper);
+        border:1px solid var(--line);
+        border-radius:18px;
+        padding:26px 22px 22px;
+        margin-top:22px;
+        box-shadow:0 10px 30px rgba(90,74,44,.06);
+      }
+      .card h2{font-size:19px;font-weight:700;margin:0 0 4px}
+      .card .hint{font-size:13.5px;color:var(--muted);margin:0 0 20px;font-weight:300}
+      .field{margin-bottom:18px}
+      label{display:block;font-size:14px;font-weight:500;margin-bottom:7px;color:var(--ink)}
+      label .req{color:var(--danger)}
+      label .opt{color:var(--muted);font-weight:300;font-size:12.5px}
+      input[type="text"],input[type="tel"],input[type="number"],textarea,select{
+        width:100%;
+        font-family:inherit;font-size:15.5px;color:var(--ink);
+        background:#FDFCF9;border:1px solid var(--line-strong);
+        border-radius:10px;padding:11px 14px;
+        outline:none;transition:border-color .15s ease, box-shadow .15s ease;
+        appearance:none;
+      }
+      textarea{min-height:88px;resize:vertical;line-height:1.7}
+      input:focus,textarea:focus,select:focus{
+        border-color:var(--accent);
+        box-shadow:0 0 0 3px rgba(165,129,63,.14);
+        background:#fff;
+      }
+      input.tel{direction:ltr;text-align:left;font-size:16px;letter-spacing:.02em}
+      .error{display:none;font-size:12.5px;color:var(--danger);margin-top:5px}
+      .field.invalid input,.field.invalid textarea{border-color:var(--danger)}
+      .field.invalid .error{display:block}
+
+      /* category chips */
+      .chips{display:flex;flex-wrap:wrap;gap:8px}
+      .chip{
+        border:1px solid var(--line-strong);background:#FDFCF9;color:var(--ink-soft);
+        border-radius:999px;padding:8px 16px;font-family:inherit;font-size:14px;cursor:pointer;
+        min-height:44px;display:inline-flex;align-items:center;
+        transition:all .15s ease;
+      }
+      .chip:hover{border-color:var(--accent)}
+      .chip.active{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:500}
+
+      .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+      @media (max-width:480px){.row2{grid-template-columns:1fr}}
+
+      .submit-btn{
+        width:100%;border:0;cursor:pointer;
+        background:var(--ink);color:#FFF9EE;
+        font-family:inherit;font-size:16.5px;font-weight:700;
+        border-radius:12px;padding:15px 16px;min-height:56px;
+        transition:opacity .15s ease;
+      }
+      .submit-btn:hover{opacity:.88}
+      .submit-btn:active{opacity:.75}
+      .under-btn{
+        text-align:center;font-size:12.5px;color:var(--muted);margin:12px 0 0;font-weight:300;line-height:1.7;
+      }
+
+      /* ---------- Result ---------- */
+      .result{display:none;margin-top:22px}
+      .result.show{display:block}
+      .result .ok-head{
+        display:flex;align-items:center;gap:10px;margin-bottom:10px;
+      }
+      .ok-badge{
+        width:34px;height:34px;border-radius:50%;flex:0 0 auto;
+        background:var(--success);color:#fff;display:flex;align-items:center;justify-content:center;
+      }
+      .ok-badge svg{width:18px;height:18px}
+      .result h2{font-size:19px;font-weight:700;margin:0}
+      .result .ok-sub{font-size:14px;color:var(--ink-soft);margin:0 0 16px;font-weight:300}
+      .result .ok-sub b{color:var(--accent);font-weight:700}
+      .order-text{
+        width:100%;background:var(--accent-soft);border:1px dashed var(--line-strong);
+        border-radius:12px;padding:16px;font-family:inherit;font-size:14.5px;line-height:1.9;
+        color:var(--ink);white-space:pre-wrap;word-break:break-word;margin:0 0 16px;
+      }
+      .actions{display:grid;gap:10px}
+      .btn{
+        display:flex;align-items:center;justify-content:center;gap:8px;
+        text-decoration:none;font-family:inherit;font-size:15.5px;font-weight:700;
+        border-radius:12px;padding:13px 16px;min-height:54px;cursor:pointer;text-align:center;
+        transition:opacity .15s ease;border:0;width:100%;
+      }
+      .btn:hover{opacity:.88}
+      .btn-primary{background:var(--accent);color:#fff}
+      .btn-dark{background:var(--ink);color:#FFF9EE}
+      .btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line-strong);font-weight:500}
+      .copied-note{display:none;text-align:center;font-size:13px;color:var(--success);margin:10px 0 0;font-weight:500}
+      .copied-note.show{display:block}
+
+      /* ---------- Notes ---------- */
+      .notes{margin-top:30px;padding:0 4px}
+      .notes h3{font-size:15px;font-weight:700;margin:0 0 10px}
+      .notes ul{list-style:none;margin:0;padding:0}
+      .notes li{
+        font-size:14px;color:var(--ink-soft);font-weight:300;
+        padding:9px 0;border-bottom:1px solid var(--line);line-height:1.8;
+      }
+      .notes li:last-child{border-bottom:0}
+      .notes li b{color:var(--accent);font-weight:700}
+
+      .direct{
+        margin-top:26px;text-align:center;background:var(--paper);
+        border:1px solid var(--line);border-radius:14px;padding:20px 18px;
+      }
+      .direct p{margin:0 0 12px;font-size:14.5px;color:var(--ink-soft);font-weight:300}
+      .direct a{
+        color:var(--accent);font-weight:700;font-size:16px;text-decoration:none;
+        border-bottom:1px solid var(--accent);padding-bottom:2px;direction:ltr;display:inline-block;min-height:36px;
+      }
+
+      footer{
+        margin-top:36px;text-align:center;font-size:12.5px;color:var(--muted);font-weight:300;line-height:1.9;
+      }
+      footer .latin{direction:ltr;letter-spacing:.28em;font-size:11px;color:var(--line-strong);text-transform:uppercase}
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+
+      <div class="brand">
+        <p class="latin">Lava Shop</p>
+        <p class="fa-name">خرید از کانادا · تحویل در ایران</p>
+      </div>
+
+      <h1>ثبت سفارش</h1>
+      <p class="subtitle">هر محصولی از کانادا می‌خوای — <b>کیف، کفش، لباس، مکمل یا آرایشی</b> — این‌جا ثبتش کن؛ ما پیداش می‌کنیم، می‌خریم و برات می‌فرستیم.</p>
+      <hr class="divider" />
+
+      <div class="steps" aria-label="مراحل سفارش">
+        <div class="step">
+          <span class="num">۱</span>
+          <p>فرم رو پر کن و محصولت رو بنویس</p>
+        </div>
+        <div class="step">
+          <span class="num">۲</span>
+          <p>متن آماده‌ی سفارشت ساخته می‌شه</p>
+        </div>
+        <div class="step">
+          <span class="num">۳</span>
+          <p>با یک دکمه می‌فرستیش توی دایرکت ما</p>
+        </div>
+      </div>
+
+      <form class="card" id="orderForm" novalidate>
+        <h2>مشخصات سفارش</h2>
+        <p class="hint">کمتر از یک دقیقه طول می‌کشه. قیمت نهایی رو قبل از خرید، توی دایرکت باهات قطعی می‌کنیم.</p>
+
+        <div class="field" id="f-name">
+          <label for="name">نام و نام خانوادگی <span class="req">*</span></label>
+          <input type="text" id="name" name="name" autocomplete="name" placeholder="مثلاً سارا محمدی" />
+          <p class="error">نامت رو بنویس تا بتونیم سفارشت رو به اسمت ثبت کنیم.</p>
+        </div>
+
+        <div class="row2">
+          <div class="field" id="f-phone">
+            <label for="phone">شماره موبایل <span class="req">*</span></label>
+            <input type="tel" class="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="09xxxxxxxxx" />
+            <p class="error">یه شماره موبایل درست بنویس (۱۱ رقم، شروع با ۰۹).</p>
+          </div>
+          <div class="field" id="f-city">
+            <label for="city">شهر تحویل <span class="req">*</span></label>
+            <input type="text" id="city" name="city" autocomplete="address-level2" placeholder="مثلاً تهران" />
+            <p class="error">شهر تحویل رو بنویس.</p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>دسته‌ی محصول</label>
+          <div class="chips" id="chips" role="group" aria-label="دسته محصول">
+            <button type="button" class="chip" data-cat="کیف">کیف</button>
+            <button type="button" class="chip" data-cat="کفش و بوت">کفش و بوت</button>
+            <button type="button" class="chip" data-cat="لباس">لباس</button>
+            <button type="button" class="chip" data-cat="مکمل و ویتامین">مکمل و ویتامین</button>
+            <button type="button" class="chip" data-cat="آرایشی و بهداشتی">آرایشی و بهداشتی</button>
+            <button type="button" class="chip active" data-cat="سایر">سایر</button>
+          </div>
+        </div>
+
+        <div class="field" id="f-product">
+          <label for="product">محصول موردنظرت <span class="req">*</span></label>
+          <textarea id="product" name="product" placeholder="اسم محصول، برند و مدلش رو بنویس — اگه لینک یا عکسی ازش داری، لینکش رو هم این‌جا بذار. مثلاً: کیف مایکل کورس مدل گرینویچ، رنگ قهوه‌ای"></textarea>
+          <p class="error">بنویس چه محصولی می‌خوای تا پیداش کنیم.</p>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="qty">تعداد <span class="opt">(اختیاری)</span></label>
+            <input type="number" id="qty" name="qty" min="1" max="99" inputmode="numeric" placeholder="۱" />
+          </div>
+          <div class="field">
+            <label for="variant">سایز / رنگ <span class="opt">(اختیاری)</span></label>
+            <input type="text" id="variant" name="variant" placeholder="مثلاً سایز ۳۸، مشکی" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="notes">توضیحات اضافه <span class="opt">(اختیاری)</span></label>
+          <textarea id="notes" name="notes" style="min-height:64px" placeholder="هر نکته‌ای که لازمه بدونیم؛ مثلاً عجله داری، یا سایز جایگزین هم قبوله"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">ساختن متن سفارش</button>
+        <p class="under-btn">با زدن این دکمه، متن سفارشت آماده می‌شه تا خودت با یک ضربه بفرستیش به دایرکت لاواشاپ.</p>
+      </form>
+
+      <section class="card result" id="result" aria-live="polite">
+        <div class="ok-head">
+          <span class="ok-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </span>
+          <h2>سفارشت آماده‌ست</h2>
+        </div>
+        <p class="ok-sub">فقط یک قدم مونده: متن زیر رو <b>کپی کن</b> و توی دایرکت اینستاگرام لاواشاپ <b>پیست و ارسال</b> کن. به محض دیدنش، قیمت و موجودی رو باهات چک می‌کنیم.</p>
+        <p class="order-text" id="orderText"></p>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="copyBtn">۱ · کپی کردن متن سفارش</button>
+          <a class="btn btn-dark" id="igBtn" href="https://www.instagram.com/lavashop.ca/" target="_blank" rel="noopener">۲ · رفتن به دایرکت لاواشاپ</a>
+          <a class="btn btn-ghost" id="igWebBtn" href="https://www.instagram.com/lavashop.ca/" target="_blank" rel="noopener">اگه باز نشد: باز کردن پیج در اینستاگرام</a>
+          <a class="btn btn-ghost" id="igAppBtn" href="instagram://user?username=lavashop.ca">باز کردن پیج در اپ اینستاگرام</a>
+          <button type="button" class="btn btn-ghost" id="newBtn">ثبت یک سفارش دیگه</button>
+        </div>
+        <p class="copied-note" id="copiedNote">کپی شد — حالا توی دایرکت پیستش کن و بفرست</p>
+        <p class="under-btn">اگه هیچ‌کدوم از دکمه‌ها باز نشد: اپ اینستاگرام رو باز کن، <bdi>lavashop.ca</bdi> رو جستجو کن، وارد پیج شو و دکمه‌ی Message رو بزن؛ بعد متن کپی‌شده رو پیست و ارسال کن.</p>
+      </section>
+
+      <div class="notes">
+        <h3>خوب است بدانی</h3>
+        <ul>
+          <li>خریدها <b>مستقیم از کانادا</b> انجام می‌شه و به سراسر ایران ارسال می‌شه.</li>
+          <li><b>قیمت نهایی</b> — شامل قیمت محصول، مالیات کانادا و هزینه‌ی ارسال بر اساس وزن — قبل از خرید توی دایرکت اعلام و با تأیید تو ثبت می‌شه.</li>
+          <li>اگه محصولت رو توی فروشگاه‌ها پیدا نکردی هم بنویسش؛ <b>هر کالایی</b> از کانادا قابل سفارشه.</li>
+        </ul>
+      </div>
+
+      <div class="direct">
+        <p>ترجیح می‌دی مستقیم پیام بدی؟</p>
+        <a href="https://www.instagram.com/lavashop.ca/" target="_blank" rel="noopener">@lavashop.ca</a>
+      </div>
+
+      <footer>
+        <p class="latin">Lava Shop · Canada to Iran</p>
+        <p>لاواشاپ — خرید و ارسال کالا از کانادا به ایران</p>
+      </footer>
+
+    </main>
+
+    <script>
+      (function () {
+        var form = document.getElementById('orderForm');
+        var result = document.getElementById('result');
+        var orderTextEl = document.getElementById('orderText');
+        var copyBtn = document.getElementById('copyBtn');
+        var copiedNote = document.getElementById('copiedNote');
+        var category = 'سایر';
+
+        // Category chips
+        var chips = document.querySelectorAll('#chips .chip');
+        chips.forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            chips.forEach(function (c) { c.classList.remove('active'); });
+            chip.classList.add('active');
+            category = chip.getAttribute('data-cat');
+          });
+        });
+
+        function toFaDigits(s) {
+          return String(s).replace(/[0-9]/g, function (d) {
+            return '۰۱۲۳۴۵۶۷۸۹'[d];
+          });
+        }
+        function normalizeDigits(s) {
+          return String(s).replace(/[۰-۹]/g, function (d) {
+            return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d);
+          }).replace(/[٠-٩]/g, function (d) {
+            return '٠١٢٣٤٥٦٧٨٩'.indexOf(d);
+          });
+        }
+        function val(id) {
+          return document.getElementById(id).value.trim();
+        }
+        function setInvalid(fieldId, bad) {
+          document.getElementById(fieldId).classList.toggle('invalid', bad);
+          return !bad;
+        }
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var name = val('name');
+          var phoneRaw = normalizeDigits(val('phone')).replace(/[\s-]/g, '');
+          var city = val('city');
+          var product = val('product');
+
+          var ok = true;
+          ok = setInvalid('f-name', !name) && ok;
+          ok = setInvalid('f-phone', !/^09\d{9}$/.test(phoneRaw)) && ok;
+          ok = setInvalid('f-city', !city) && ok;
+          ok = setInvalid('f-product', !product) && ok;
+          if (!ok) {
+            var firstBad = document.querySelector('.field.invalid input, .field.invalid textarea');
+            if (firstBad) firstBad.focus();
+            return;
+          }
+
+          var lines = [];
+          lines.push('سلام لاواشاپ، سفارش جدید دارم:');
+          lines.push('');
+          lines.push('نام: ' + name);
+          lines.push('موبایل: ' + phoneRaw);
+          lines.push('شهر تحویل: ' + city);
+          lines.push('دسته: ' + category);
+          lines.push('محصول: ' + product);
+          var qty = val('qty');
+          if (qty) lines.push('تعداد: ' + toFaDigits(normalizeDigits(qty)));
+          var variant = val('variant');
+          if (variant) lines.push('سایز/رنگ: ' + variant);
+          var notes = val('notes');
+          if (notes) lines.push('توضیحات: ' + notes);
+
+          orderTextEl.textContent = lines.join('\n');
+          copiedNote.classList.remove('show');
+          copyBtn.textContent = '۱ · کپی کردن متن سفارش';
+          result.classList.add('show');
+          result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Clear invalid state as the user types
+        ['name', 'phone', 'city', 'product'].forEach(function (id) {
+          document.getElementById(id).addEventListener('input', function () {
+            document.getElementById('f-' + id).classList.remove('invalid');
+          });
+        });
+
+        copyBtn.addEventListener('click', function () {
+          var text = orderTextEl.textContent;
+          function done() {
+            copiedNote.classList.add('show');
+            copyBtn.textContent = 'کپی شد — حالا برو به دایرکت';
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done, function () { fallback(); });
+          } else {
+            fallback();
+          }
+          function fallback() {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); done(); } catch (err) {}
+            document.body.removeChild(ta);
+          }
+        });
+
+        // Going to Instagram also copies the order text, so it is ready to
+        // paste even if the separate copy step was skipped.
+        ['igBtn', 'igWebBtn', 'igAppBtn'].forEach(function (id) {
+          var link = document.getElementById(id);
+          if (!link) return;
+          link.addEventListener('click', function () {
+            var text = orderTextEl.textContent;
+            if (text && navigator.clipboard && navigator.clipboard.writeText) {
+              try { navigator.clipboard.writeText(text); } catch (err) {}
+            }
+          });
+        });
+
+        document.getElementById('newBtn').addEventListener('click', function () {
+          form.reset();
+          chips.forEach(function (c) { c.classList.toggle('active', c.getAttribute('data-cat') === 'سایر'); });
+          category = 'سایر';
+          result.classList.remove('show');
+          form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      })();
+    </script>
+  </body>
+</html>
